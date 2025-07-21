@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { McLaren } from 'next/font/google'
 import { Header } from '~/components/header'
 import { Footer } from '~/components/footer'
+import { TipDialogs } from '~/components/tip-dialogs'
 
 const mcLaren = McLaren({
   variable: '--font-mclaren',
@@ -27,6 +28,7 @@ export default function RootLayout({
         <main className="gap-2 overflow-x-hidden font-sans">
           <Header />
           {children}
+          <TipDialogs />
           <Footer />
         </main>
       </body>

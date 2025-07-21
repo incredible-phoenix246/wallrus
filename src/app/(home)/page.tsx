@@ -4,7 +4,6 @@ import React from 'react'
 import Icon1 from './Icon'
 import AnimtatedTorus from './animated-torus'
 import BlurImage from '~/components/miscellaneous/blur-image'
-import { TipDialogs } from '~/components/tip-dialogs'
 
 const page = () => {
   return (
@@ -36,7 +35,6 @@ const page = () => {
           />
         }
       />
-      <TipDialogs />
     </>
   )
 }
