@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(mcLaren.variable, 'antialiased')}>
-        <main className="gap-2 font-sans">
+        <main className="gap-2 overflow-x-hidden font-sans">
           <Header />
           {children}
           <Footer />
