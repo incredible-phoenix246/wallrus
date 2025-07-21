@@ -1,10 +1,10 @@
-import { FeatureSection } from '!/components/featured-section'
-import { HeroSection } from '!/components/hero'
+import { FeatureSection } from '~/components/featured-section'
+import { HeroSection } from '~/components/hero'
 import React from 'react'
-import Icon1 from './Icon!'
+import Icon1 from './Icon'
 import AnimtatedTorus from './animated-torus'
-import BlurImage from '!/components/miscellaneous/blur-image'
-import { TipDialogs } from '!/components/tip-dialogs'
+import BlurImage from '~/components/miscellaneous/blur-image'
+import { TipDialogs } from '~/components/tip-dialogs'
 
 const page = () => {
   return (

@@ -2,7 +2,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import BlurImage from './miscellaneous/blur-image'
-import { useDialogStore } from '!/dialog-store'
+import { useDialogStore } from '~/dialog-store'
 
 export const Header = () => {
   const { openDialog } = useDialogStore()
