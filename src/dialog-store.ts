@@ -9,6 +9,7 @@ interface DialogData {
     newTotalFunds?: string
     sharedBlobId?: string
     epochs?: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     blobStatus?: any
     currentStep?: string
     tipAmount?: string
@@ -44,6 +45,7 @@ interface DialogStore {
     disconnectWallet: () => void
     showBubble: (message: string) => void
     hideBubble: () => void
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setBlobStatus: (status: any) => void
     setCurrentStep: (step: string) => void
     resetBlobData: () => void
@@ -51,7 +53,7 @@ interface DialogStore {
 
 export const useDialogStore = create<DialogStore>()(
     persist(
-        (set, get) => ({
+        (set) => ({
             isOpen: false,
             type: null,
             data: {},
@@ -85,7 +87,7 @@ export const useDialogStore = create<DialogStore>()(
                 // Simulate successful connection with a mock address
                 const mockAddress = "0x5ce5f4e8c8b2a1d3e4f5a6b7c8d9e0f1a2b3c4d5e638"
 
-                set((state) => ({
+                set(() => ({
                     wallet: {
                         isConnected: true,
                         address: mockAddress,
@@ -95,7 +97,7 @@ export const useDialogStore = create<DialogStore>()(
             },
 
             disconnectWallet: () => {
-                set((state) => ({
+                set(() => ({
                     wallet: {
                         isConnected: false,
                         address: null,

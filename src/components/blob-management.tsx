@@ -27,12 +27,7 @@ const BlobManagement = () => {
     wallet,
   } = useDialogStore()
 
-  const {
-    blobStatus,
-    currentStep = 'input',
-    tipAmount = '',
-    extendEpochs = '',
-  } = data
+  const { blobStatus, currentStep = 'input' } = data
 
   const [customTipAmount, setCustomTipAmount] = useState('')
   const [customExtendEpochs, setCustomExtendEpochs] = useState('')
@@ -290,7 +285,7 @@ const BlobManagement = () => {
               <p className="mt-2 text-sm text-purple-200">
                 This will add{' '}
                 {Number.parseInt(customTipAmount || '0').toLocaleString()} SUI
-                to the blob's funds
+                to the blob&apos;s funds
               </p>
             )}
           </div>
@@ -395,7 +390,7 @@ const BlobManagement = () => {
         const result = await simulateTipTransaction(customTipAmount || '100')
         showBubble(`Successfully tipped ${result.amountTipped} to blob!`)
         setCurrentStep('extend')
-      } catch (error) {
+      } catch {
         showBubble('Transaction failed. Please try again.')
       } finally {
         setIsProcessing(false)
@@ -417,7 +412,7 @@ const BlobManagement = () => {
           `Successfully extended blob lifetime by ${result.epochsExtended} epochs!`
         )
         setCurrentStep('success')
-      } catch (error) {
+      } catch {
         showBubble('Transaction failed. Please try again.')
       } finally {
         setIsProcessing(false)
