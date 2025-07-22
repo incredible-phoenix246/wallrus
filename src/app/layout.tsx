@@ -5,6 +5,7 @@ import { McLaren } from 'next/font/google'
 import { Header } from '~/components/header'
 import { Footer } from '~/components/footer'
 import { TipDialogs } from '~/components/tip-dialogs'
+import { Providers } from './provider'
 
 const mcLaren = McLaren({
   variable: '--font-mclaren',
@@ -25,12 +26,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(mcLaren.variable, 'antialiased')}>
-        <main className="gap-2 overflow-x-hidden font-sans">
-          <Header />
-          {children}
-          <TipDialogs />
-          <Footer />
-        </main>
+        <Providers
+          attribute="class"
+          defaultTheme="light"
+          disableTransitionOnChange={false}
+        >
+          <main className="gap-2 overflow-x-hidden font-sans">
+            <Header />
+            {children}
+            <TipDialogs />
+            <Footer />
+          </main>
+        </Providers>
       </body>
     </html>
   )

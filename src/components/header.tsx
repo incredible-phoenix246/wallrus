@@ -1,17 +1,22 @@
 'use client'
+import {
+  useWallets,
+  useConnectWallet,
+  useCurrentWallet,
+} from '@mysten/dapp-kit'
 import { motion } from 'framer-motion'
-import { Loader2 } from 'lucide-react'
 import BlurImage from './miscellaneous/blur-image'
-import { useDialogStore } from '../dialog-store'
 import { WalletDropdown } from './wallet-dropdown'
+import { inDevelopment } from '~/lib/utils'
 
 export const Header = () => {
-  const { wallet, connectWallet } = useDialogStore()
+  const wallets = useWallets()
+  const { mutate: connect } = useConnectWallet()
+  const { currentWallet, connectionStatus } = useCurrentWallet()
 
-  const handleConnectWallet = async () => {
-    if (!wallet.isConnected && !wallet.isConnecting) {
-      await connectWallet()
-    }
+  if (inDevelopment) {
+    console.log('Current Wallet:', currentWallet)
+    console.log('Connection Status:', connectionStatus)
   }
 
   return (
@@ -28,27 +33,36 @@ export const Header = () => {
         height={40}
         className="h-10 w-10"
       />
-
-      {wallet.isConnected && wallet.address ? (
-        <WalletDropdown address={wallet.address} />
-      ) : (
-        <motion.button
-          whileHover={{ scale: 1.05, backgroundColor: '#213b46' }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleConnectWallet}
-          disabled={wallet.isConnecting}
-          className="flex cursor-pointer items-center gap-2 rounded-md bg-[#213b46] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {wallet.isConnecting ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              CONNECTING...
-            </>
-          ) : (
-            'CONNECT WALLET'
-          )}
-        </motion.button>
-      )}
+      {connectionStatus === 'connected'
+        ? currentWallet.accounts.map((account) => (
+            <WalletDropdown key={account.address} address={account.address} />
+          ))
+        : wallets.map((wallet) => (
+            <motion.button
+              whileHover={{ scale: 1.05, backgroundColor: '#213b46' }}
+              whileTap={{ scale: 0.95 }}
+              key={wallet.name}
+              onClick={() => {
+                connect(
+                  { wallet },
+                  {
+                    onSuccess: () => console.log('connected'),
+                  }
+                )
+              }}
+              className="flex cursor-pointer items-center gap-2 rounded-md bg-[#213b46] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              CONNECT WALLET
+              <BlurImage
+                src={wallet.icon}
+                alt={`${wallet.name} icon`}
+                width={40}
+                height={40}
+                unoptimized
+                className="ml-2 h-10 w-10"
+              />
+            </motion.button>
+          ))}
     </motion.header>
   )
 }

@@ -53,11 +53,10 @@ export const HeroSection = () => {
           <motion.button
             whileHover={{ scale: 1.05, backgroundColor: '#1e293b' }}
             whileTap={{ scale: 0.95 }}
-            className="rounded-md bg-[#213b46] px-8 py-3 text-lg font-medium text-white transition-colors hover:bg-slate-800"
+            className="cursor-pointer rounded-md bg-[#213b46] px-8 py-3 text-lg font-medium text-white transition-colors hover:bg-slate-800"
           >
             GET STARTED
           </motion.button>
-
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
