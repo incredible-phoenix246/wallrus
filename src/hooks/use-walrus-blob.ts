@@ -40,12 +40,12 @@ export function useWalrusBlob() {
                 setIsSearching(false)
             }
         },
-        enabled: !!searchQuery.trim() && searchQuery.length > 10, // Only search if query looks like a valid blob ID
-        staleTime: 30000, // Cache for 30 seconds
+        enabled: !!searchQuery.trim() && searchQuery.length > 10,
         retry: 1,
+        staleTime: 0
     })
 
-    // Mutation to send tip to blob
+
     const sendTipMutation = useMutation({
         mutationFn: async ({ blobId, amount }: { blobId: string; amount: number }) => {
             if (!currentWallet) {

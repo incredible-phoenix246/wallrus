@@ -10,7 +10,6 @@ import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { useTipDialogStore } from '~/hooks/tip-dialog-store'
-// import { useWalrusBlob } from '~/hooks/use-walrus-blob'
 import { Search, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
 import { useWalrusBlob } from '~/hooks/use-walrus-blob'
 
@@ -74,7 +73,7 @@ export function TipDialog() {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="font-sans sm:min-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
             TIP A BLOB
@@ -86,42 +85,43 @@ export function TipDialog() {
 
         <div className="space-y-4">
           {/* Search Section */}
-          <div className="space-y-2">
-            <Label htmlFor="blob-search">Shared Blob Object ID</Label>
-            <div className="flex gap-2">
-              <div className="relative flex-1">
+          <div className="flex flex-col gap-4">
+            <div className="flex min-w-0 gap-2">
+              <div className="relative min-w-0 flex-1">
                 <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                 <Input
                   id="blob-search"
                   placeholder="Search for Shared Blob"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="min-w-0 pl-10"
                 />
               </div>
-              <Button
-                onClick={handleSearch}
-                disabled={!searchQuery.trim() || isSearching}
-                className="bg-[#213b46] hover:bg-[#213b46]/90"
-              >
-                {isSearching ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  'Search for Blob'
-                )}
-              </Button>
             </div>
+
+            <Button
+              onClick={handleSearch}
+              disabled={!searchQuery.trim() || isSearching}
+              className="bg-[#213b46] hover:bg-[#213b46]/90"
+            >
+              {isSearching ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                'Search for Blob'
+              )}
+            </Button>
           </div>
 
           {/* Error Display */}
           {(error || searchError || tipError) && (
-            <div className="flex items-center gap-2 rounded-md bg-red-50 p-3 text-sm text-red-600">
-              <AlertCircle className="h-4 w-4" />
-              {error || searchError?.message || tipError?.message}
+            <div className="flex w-full flex-wrap items-start gap-2 rounded-md bg-red-50 p-3 text-sm break-words whitespace-normal text-red-600">
+              <AlertCircle className="h-4 w-4 shrink-0" />
+              <span className="flex-1 break-words">
+                {error || searchError?.message || tipError?.message}
+              </span>
             </div>
           )}
 
-          {/* Blob Info Section */}
           {blobInfo && (
             <div className="space-y-4">
               {/* Status */}
