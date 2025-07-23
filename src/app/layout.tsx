@@ -59,7 +59,8 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <main className="relative gap-2 bg-[#F2F2F2] font-sans">
-            {inDevelopment && <NetworkSwitcher />}
+            {/* {inDevelopment && } */}
+            <NetworkSwitcher />
             <Header />
             {children}
             <FloatingNetworkIndicator />
