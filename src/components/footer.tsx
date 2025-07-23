@@ -12,13 +12,13 @@ export const Footer = () => {
     >
       <div className="container mx-auto flex flex-col items-center justify-between text-slate-600 md:flex-row">
         <motion.p whileHover={{ scale: 1.02 }} className="mb-4 md:mb-0">
-          © {new Date().getFullYear()} WALPRESS
+          © {new Date().getFullYear()} EXTEND
         </motion.p>
         <motion.p
           whileHover={{ scale: 1.02 }}
           className="text-center md:text-right"
         >
-          Powered by Walrus Blockchain • Decentralized Storage for Everyone
+          Developed by Walpress
         </motion.p>
       </div>
     </motion.footer>
