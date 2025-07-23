@@ -7,11 +7,14 @@ import BlurImage from '~/components/miscellaneous/blur-image'
 import UseCaseSection from '~/components/use-case'
 import HowItWorksSection from '~/components/how-it-works'
 import FaqSection from '~/components/faq-section'
+import CtaSection from '~/components/cta-section'
+import WhyExtend from '~/components/why'
 
 const page = () => {
   return (
     <>
       <HeroSection />
+      <WhyExtend />
       <FeatureSection
         title="DECENTRALISED SHARED HOSTING"
         description="Files stored on the Walrus blockchain are kept alive through community contributions — anyone can pitch in to cover hosting costs."
@@ -41,6 +44,7 @@ const page = () => {
       <HowItWorksSection />
       <UseCaseSection />
       <FaqSection />
+      <CtaSection />
     </>
   )
 }

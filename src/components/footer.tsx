@@ -10,7 +10,7 @@ export const Footer = () => {
       transition={{ duration: 0.6 }}
       className="bg-white px-4 py-8"
     >
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between text-slate-600 md:flex-row">
+      <div className="container mx-auto flex flex-col items-center justify-between text-slate-600 md:flex-row">
         <motion.p whileHover={{ scale: 1.02 }} className="mb-4 md:mb-0">
           © {new Date().getFullYear()} WALPRESS
         </motion.p>
