@@ -1,31 +1,26 @@
 'use client'
 
-import {
-  createNetworkConfig,
-  SuiClientProvider,
-  WalletProvider,
-} from '@mysten/dapp-kit'
+import { useNetwork } from '~/hooks/use-network'
 import { Toaster } from '~/components/ui/sonner'
 import { getQueryClient } from '~/get-query-client'
-import { getFullnodeUrl } from '@mysten/sui/client'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-
-export const { networkConfig } = createNetworkConfig({
-  testnet: { url: getFullnodeUrl('testnet') },
-  mainnet: { url: getFullnodeUrl('mainnet') },
-})
+import { SuiClientProvider, WalletProvider } from '@mysten/dapp-kit'
 
 export function Providers({
   children,
   ...props
 }: React.ComponentProps<typeof NextThemesProvider>) {
   const queryClient = getQueryClient()
+  const { networkConfig, currentNetwork } = useNetwork()
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SuiClientProvider networks={networkConfig} defaultNetwork="testnet">
+      <SuiClientProvider
+        networks={networkConfig}
+        defaultNetwork={currentNetwork}
+      >
         <WalletProvider>
           <NextThemesProvider {...props}>
             {children}

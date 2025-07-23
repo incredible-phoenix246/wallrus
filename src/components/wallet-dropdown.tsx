@@ -5,7 +5,9 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { User, ChevronDown, LogOut } from 'lucide-react'
 import { useDialogStore } from '../dialog-store'
+import { useDisconnectWallet } from '@mysten/dapp-kit'
 import { cn } from '~/lib/utils'
+import { useTipDialogStore } from '~/hooks/tip-dialog-store'
 
 interface WalletDropdownProps {
   address: string
@@ -13,8 +15,10 @@ interface WalletDropdownProps {
 
 export const WalletDropdown: React.FC<WalletDropdownProps> = ({ address }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const { mutate: disconnect } = useDisconnectWallet()
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const { openDialog, disconnectWallet } = useDialogStore()
+  // const { openDialog } = useDialogStore()
+  const { openDialog } = useTipDialogStore()
   const truncatedAddress = `${address.slice(0, 6)}...${address.slice(-4)}`
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -32,17 +36,12 @@ export const WalletDropdown: React.FC<WalletDropdownProps> = ({ address }) => {
 
   const handleTipBlob = () => {
     setIsOpen(false)
-    openDialog('tip-shared-blob')
+    openDialog()
   }
 
   const handleExtendBlob = () => {
     setIsOpen(false)
-    openDialog('extend-blob')
-  }
-
-  const handleDisconnect = () => {
-    setIsOpen(false)
-    disconnectWallet()
+    // openDialog('extend-blob')
   }
 
   return (
@@ -87,7 +86,7 @@ export const WalletDropdown: React.FC<WalletDropdownProps> = ({ address }) => {
               </button>
               <hr className="my-1 border-gray-100" />
               <button
-                onClick={handleDisconnect}
+                onClick={() => disconnect()}
                 className="flex w-full cursor-pointer items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50"
               >
                 <LogOut className="h-4 w-4" />

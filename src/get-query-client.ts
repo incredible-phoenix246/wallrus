@@ -12,6 +12,7 @@ function makeQueryClient() {
         gcTime: 10 * TOKEN_MINUTE,
         staleTime: 1 * TOKEN_MINUTE,
         refetchInterval: 5 * TOKEN_MINUTE,
+        refetchOnMount: true,
         retry: 3,
         retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
       },

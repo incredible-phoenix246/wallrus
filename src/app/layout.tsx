@@ -1,11 +1,14 @@
 import './globals.css'
-import { cn } from '~/lib/utils'
+import { cn, inDevelopment } from '~/lib/utils'
 import type { Metadata } from 'next'
 import { McLaren } from 'next/font/google'
 import { Header } from '~/components/header'
 import { Footer } from '~/components/footer'
 import { TipDialogs } from '~/components/tip-dialogs'
 import { Providers } from './provider'
+import { NetworkSwitcher } from '~/components/network-switcher'
+import { FloatingNetworkIndicator } from '~/components/floating-network-indicator'
+import { TipDialog } from '~/components/tip-dialog'
 
 const mcLaren = McLaren({
   variable: '--font-mclaren',
@@ -32,8 +35,11 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <main className="gap-2 overflow-x-hidden font-sans">
+            {inDevelopment && <NetworkSwitcher />}
             <Header />
             {children}
+            <FloatingNetworkIndicator />
+            <TipDialog />
             <TipDialogs />
             <Footer />
           </main>
