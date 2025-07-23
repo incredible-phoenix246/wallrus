@@ -17,6 +17,7 @@ export default function BlurImage(props: ComponentProps<typeof Image>) {
         isLoading ? 'blur-sm' : 'blur-0',
         props.className
       )}
+      draggable={props.draggable ?? false}
       onLoad={() => {
         setTimeout(() => {
           setLoading(false)

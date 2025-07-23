@@ -41,9 +41,9 @@ export const FeatureSection = ({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
-      className={cn('py-16 md:py-24', className)}
+      className={cn('', className)}
     >
-      <div className="mx-auto max-w-7xl">
+      <div className="container mx-auto">
         <div
           className={cn(
             'flex flex-col items-center gap-12 lg:flex-row',

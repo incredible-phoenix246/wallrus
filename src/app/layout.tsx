@@ -34,7 +34,7 @@ export default function RootLayout({
           defaultTheme="light"
           disableTransitionOnChange={false}
         >
-          <main className="gap-2 overflow-x-hidden font-sans">
+          <main className="relative gap-2 bg-[#F2F2F2] font-sans">
             {inDevelopment && <NetworkSwitcher />}
             <Header />
             {children}

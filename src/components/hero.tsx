@@ -24,7 +24,7 @@ export const HeroSection = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="bg-white px-4 py-16 text-center md:py-24 lg:py-32"
+      className="px-4 py-16 text-center md:py-24 lg:py-32"
     >
       <div className="mx-auto max-w-4xl">
         <motion.h1
