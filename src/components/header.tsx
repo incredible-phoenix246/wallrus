@@ -40,7 +40,7 @@ export const Header = () => {
         transition={{ duration: 0.5 }}
         className="sticky top-0 z-50 w-full border-b border-gray-200 bg-[#F2F2F2]/70 backdrop-blur-md"
       >
-        <div className="container mx-auto flex flex-col items-center justify-between p-4 sm:px-6 md:p-6 lg:flex-row lg:px-12">
+        <div className="container mx-auto flex items-center justify-between p-4 sm:px-6 md:p-6 lg:px-12">
           <BlurImage
             src="/logo.png"
             alt="Logo"
