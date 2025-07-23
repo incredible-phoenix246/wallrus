@@ -32,6 +32,7 @@ export function useWalrusBlob() {
                 setBlobInfo(mockBlobInfo)
                 return mockBlobInfo
             } catch (error) {
+                console.log("Error searching blob:", error);
                 const errorMessage = error instanceof Error ? error.message : "Failed to search blob"
                 setError(errorMessage)
                 setBlobInfo(null)
