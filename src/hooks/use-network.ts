@@ -36,6 +36,7 @@ const createClientsForNetwork = (network: NetworkType) => {
     const walrusClient = new WalrusClient({
         network: network === "mainnet" ? "mainnet" : "testnet",
         suiClient,
+        wasmUrl: 'https://unpkg.com/@mysten/walrus-wasm@latest/web/walrus_wasm_bg.wasm',
     })
 
     return { suiClient, walrusClient }

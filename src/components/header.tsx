@@ -8,6 +8,7 @@ import { useAutoConnect } from '~/hooks/use-auto-connect'
 import { useWalletConnection } from '~/hooks/use-wallet-connection'
 import { Loader2, AlertCircle } from 'lucide-react'
 import { Alert, AlertDescription } from '~/components/ui/alert'
+import { SLUSH_WALLET_NAME } from '@mysten/slush-wallet'
 
 export const Header = () => {
   const { isAutoConnecting, autoConnectError } = useAutoConnect()
@@ -24,9 +25,13 @@ export const Header = () => {
   if (inDevelopment) {
     console.log('Current Wallet:', currentWallet)
     console.log('Connection Status:', connectionStatus)
+    console.log(wallets)
   }
 
   const showError = autoConnectError || connectionError
+  const allowedWallet = wallets.find((w) => w.name === SLUSH_WALLET_NAME)
+
+  if (!allowedWallet) return
 
   return (
     <motion.header
@@ -70,26 +75,15 @@ export const Header = () => {
           </motion.div>
         ) : (
           <div className="flex flex-wrap gap-2">
-            {wallets.map((wallet) => (
-              <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: '#213b46' }}
-                whileTap={{ scale: 0.95 }}
-                key={wallet.name}
-                onClick={() => connect(wallet)}
-                disabled={isConnectingToWallet}
-                className="flex cursor-pointer items-center gap-2 rounded-md bg-[#213b46] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                CONNECT WALLET
-                <BlurImage
-                  src={wallet.icon}
-                  alt={`${wallet.name} icon`}
-                  width={40}
-                  height={40}
-                  unoptimized
-                  className="ml-2 h-10 w-10"
-                />
-              </motion.button>
-            ))}
+            <motion.button
+              whileHover={{ scale: 1.05, backgroundColor: '#213b46' }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => connect(allowedWallet)}
+              disabled={isConnectingToWallet}
+              className="flex cursor-pointer items-center gap-2 rounded-md bg-[#213b46] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              CONNECT WALLET
+            </motion.button>
           </div>
         )}
       </div>

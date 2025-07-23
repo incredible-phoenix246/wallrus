@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  serverExternalPackages: ['@mysten/walrus', '@mysten/walrus-wasm'],
 }
 
 export default nextConfig

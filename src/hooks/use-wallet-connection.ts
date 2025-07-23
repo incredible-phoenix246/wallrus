@@ -19,7 +19,7 @@ export function useWalletConnection() {
     })
 
     const connectMutation = useMutation({
-        mutationFn: async (wallet: any) => {
+        mutationFn: async (wallet: typeof wallets[0]) => {
             return new Promise((resolve, reject) => {
                 connectWallet(
                     { wallet },
