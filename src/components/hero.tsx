@@ -1,8 +1,19 @@
 'use client'
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useAutoConnect } from '~/hooks/use-auto-connect'
+import { useWalletConnection } from '~/hooks/use-wallet-connection'
+import { SLUSH_WALLET_NAME } from '@mysten/slush-wallet'
+import { useTipDialogStore } from '~/hooks/tip-dialog-store'
+import { useRouter } from 'next/navigation'
 
 export const HeroSection = () => {
+  const { isAutoConnecting } = useAutoConnect()
+  const { wallets, connectionStatus, connect, isConnectingToWallet } =
+    useWalletConnection()
+  const { openDialog } = useTipDialogStore()
+  const router = useRouter()
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -18,6 +29,8 @@ export const HeroSection = () => {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   }
+
+  const allowedWallet = wallets.find((w) => w.name === SLUSH_WALLET_NAME)
 
   return (
     <motion.section
@@ -53,19 +66,43 @@ export const HeroSection = () => {
           <motion.button
             whileHover={{ scale: 1.05, backgroundColor: '#1e293b' }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              if (isAutoConnecting || isConnectingToWallet) return
+              if (connectionStatus === 'connected') {
+                openDialog()
+              } else if (allowedWallet) {
+                connect(allowedWallet)
+              } else {
+                router.push(
+                  'https://chromewebstore.google.com/detail/slush-%E2%80%94-a-sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil'
+                )
+              }
+            }}
             className="cursor-pointer rounded-md bg-[#213b46] px-8 py-3 text-lg font-medium text-white transition-colors hover:bg-slate-800"
           >
-            GET STARTED
+            TIP A BLOB
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              if (isAutoConnecting || isConnectingToWallet) return
+              if (connectionStatus === 'connected') {
+                openDialog()
+              } else if (allowedWallet) {
+                connect(allowedWallet)
+              } else {
+                router.push(
+                  'https://chromewebstore.google.com/detail/slush-%E2%80%94-a-sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil'
+                )
+              }
+            }}
             className="flex items-center gap-2 text-lg font-medium text-slate-600 transition-colors hover:text-slate-800"
           >
             <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-slate-400">
               <div className="h-2 w-2 rounded-full bg-slate-400"></div>
             </div>
-            JOIN OUR COMMUNITY
+            EXTEND BLOB
           </motion.button>
         </motion.div>
       </div>

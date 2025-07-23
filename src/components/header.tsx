@@ -9,7 +9,6 @@ import { useWalletConnection } from '~/hooks/use-wallet-connection'
 import { Loader2, AlertCircle } from 'lucide-react'
 import { Alert, AlertDescription } from '~/components/ui/alert'
 import { SLUSH_WALLET_NAME } from '@mysten/slush-wallet'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export const Header = () => {
@@ -23,7 +22,6 @@ export const Header = () => {
     connectionError,
     isConnectingToWallet,
   } = useWalletConnection()
-  const router = useRouter()
 
   if (inDevelopment) {
     console.log('Current Wallet:', currentWallet)
@@ -82,7 +80,7 @@ export const Header = () => {
             ) : (
               <div className="flex flex-wrap gap-2">
                 <Link
-                  href="  https://chromewebstore.google.com/detail/slush-%E2%80%94-a-sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil"
+                  href="https://chromewebstore.google.com/detail/slush-%E2%80%94-a-sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil"
                   target="_blank"
                   passHref
                 >
