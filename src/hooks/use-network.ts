@@ -45,7 +45,7 @@ const createClientsForNetwork = (network: NetworkType) => {
 export const useNetwork = create<NetworkState>()(
     persist(
         (set,) => {
-            const initialNetwork: NetworkType = "devnet"
+            const initialNetwork: NetworkType = "mainnet"
             const { suiClient, walrusClient } = createClientsForNetwork(initialNetwork)
 
             return {

@@ -26,7 +26,7 @@ const WhyExtend = () => {
   }
   return (
     <motion.section
-      className="bg-[#004369] to-teal-800 px-4 py-20 md:px-8 lg:px-16"
+      className="bg-[#004369] to-teal-800 px-4 py-20 sm:pt-24 md:px-8 lg:px-16"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-100px' }}
