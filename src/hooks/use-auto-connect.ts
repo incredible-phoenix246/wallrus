@@ -25,7 +25,7 @@ export function useAutoConnect() {
     })
 
     const autoConnectMutation = useMutation({
-        mutationFn: async (wallet: any) => {
+        mutationFn: async (wallet: { name: string }) => {
             return new Promise((resolve, reject) => {
                 connectWallet(
                     { wallet },
@@ -46,7 +46,7 @@ export function useAutoConnect() {
         },
         retry: 2,
         retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-        onError: (error) => {
+        onError: () => {
             queryClient.invalidateQueries()
         },
     })

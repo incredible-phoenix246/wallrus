@@ -9,17 +9,17 @@ importers:
   .:
     dependencies:
       '@mysten/dapp-kit':
-        specifier: ^0.16.16
-        version: 0.16.16(@tanstack/react-query@5.83.0(react@19.1.0))(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)
+        specifier: ^0.17.0
+        version: 0.17.0(@tanstack/react-query@5.83.0(react@19.1.0))(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)
       '@mysten/slush-wallet':
-        specifier: ^0.1.16
-        version: 0.1.16(typescript@5.8.3)
+        specifier: ^0.1.17
+        version: 0.1.17(typescript@5.8.3)
       '@mysten/sui':
-        specifier: ^1.36.1
-        version: 1.36.1(typescript@5.8.3)
+        specifier: ^1.36.2
+        version: 1.36.2(typescript@5.8.3)
       '@mysten/walrus':
-        specifier: ^0.3.1
-        version: 0.3.1(typescript@5.8.3)
+        specifier: ^0.4.0
+        version: 0.4.0(typescript@5.8.3)
       '@mysten/walrus-wasm':
         specifier: ^0.1.0
         version: 0.1.0
@@ -36,8 +36,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       framer-motion:
-        specifier: ^12.23.7
-        version: 12.23.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^12.23.9
+        version: 12.23.9(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       lucide-react:
         specifier: ^0.525.0
         version: 0.525.0(react@19.1.0)
@@ -127,8 +127,8 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@babel/runtime@7.27.6':
-    resolution: {integrity: sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==}
+  '@babel/runtime@7.28.2':
+    resolution: {integrity: sha512-KHp2IflsnGywDjBWDkR9iEqiWSpc8GIi0lgTT3mOElT0PP1tG26P4tmFI2YvAdzgq9RGyoHZQEIEdZy6Ec5xCA==}
     engines: {node: '>=6.9.0'}
 
   '@emnapi/core@1.4.5':
@@ -383,30 +383,30 @@ packages:
   '@mysten/bcs@1.6.4':
     resolution: {integrity: sha512-HBBrqMtnVp5vy12efJYhj/HnOYGu+x5SqRQpnOJEHEkxypGZ01WNFoCNw7USzDSyJvPauhqdzUXzR+lYM1D5/g==}
 
-  '@mysten/dapp-kit@0.16.16':
-    resolution: {integrity: sha512-5oP7WnMuXCZuqueWGZ4Ckl84ixy1d+63nqL+L3rjI+zTFjiqMV5CJTiugLLeSmmjlSMCG7Eneg+bB4Osrp58+A==}
+  '@mysten/dapp-kit@0.17.0':
+    resolution: {integrity: sha512-ABW0FFo0IFV8hxNZVsSFRFbW25MtNvio05SOCr9fhBimylV6Z5LVGb/rE/G+rTnENFXKRLanBnerfjpMvLsp1A==}
     peerDependencies:
       '@tanstack/react-query': ^5.0.0
       react: '*'
 
-  '@mysten/slush-wallet@0.1.16':
-    resolution: {integrity: sha512-/g8vXNKI3TVKAhW3ss651hJVyB2R6X9I3OshH/NBLm0bD5kbnPmSKdP1rjr6xV4iMpArUkkZO9nIx7I8GjlwaQ==}
+  '@mysten/slush-wallet@0.1.17':
+    resolution: {integrity: sha512-uNnPKmjKTLdLdNy1HAemxU+aR5RtT/lpMAXIRLznknz4D1UOaVGWPpIihX2yO0VLjEO0m+a/J35arhwklWqsiw==}
 
-  '@mysten/sui@1.36.1':
-    resolution: {integrity: sha512-3QmILnc2BpV8sdr5bfJpf6ipE4L6gnm8BDvE5Jk4W1WZPgWMAly39fYsOKCc4TYB013zwxRRStplHdBAGPwX8Q==}
+  '@mysten/sui@1.36.2':
+    resolution: {integrity: sha512-TRRdzJBa+ZvAQwwjvagecmWNALP6G4oqum8E+959D17KJKBwR5uY9TvlWzUR7dnjNWXIju7OH6KEqgah9hKzUw==}
     engines: {node: '>=18'}
 
   '@mysten/utils@0.1.1':
     resolution: {integrity: sha512-jvhJC6/2la1QHltukQXzfyTZ+VVHxe187JjPx+mEXRUWyAo6jCSdioOQJIfaGu4K4i+37KeiydXRwV/bq/7UJQ==}
 
-  '@mysten/wallet-standard@0.16.6':
-    resolution: {integrity: sha512-VZUB6WpoBMUxUnZ/uLjJOnYt8D4gDsPe7S5DY25jIKSHXyWXzDWhXGSwRahjzWqBpCF8yjyRU833zpCLcIfaWg==}
+  '@mysten/wallet-standard@0.16.7':
+    resolution: {integrity: sha512-xWTQYmeIxQ00wppCZKnGRqsnFL0JovxMrqlsfCIwBoVzgYp7xPzlAPjv1cFc4hABDj+PEfd1fCwcnXN8xd8uiw==}
 
   '@mysten/walrus-wasm@0.1.0':
     resolution: {integrity: sha512-sCTFzzbMImfd9nKZM/wgRBa8P6miLk6BbEdqKft+UIgmJyvd60DV4+hXvIoVIYTSdgP7FUIgu+9If1hVfvv5BA==}
 
-  '@mysten/walrus@0.3.1':
-    resolution: {integrity: sha512-hb1Q47yc61Hql+y2iuLKk0tBAPcEGHZ82Bt8ePil00nxcU4c1MDRGMnn6gwMsiZ6T8Zn89Pd8/CKj8of9+XvXQ==}
+  '@mysten/walrus@0.4.0':
+    resolution: {integrity: sha512-J/2438Oko9ATC6AjD9u4pzWzzw4LQd6ObZCAtQRYpfEiE0bDgZDXXcR2NjN3Odgm9NCCkioGorsdxdt1rR/njg==}
 
   '@mysten/window-wallet-core@0.0.6':
     resolution: {integrity: sha512-uYjdUVok0pAaMGMxAdZfmW+2SCXgdQok9YtKmno5Tj8zlRQGv9Qet7EuCnDcBKquSbtqid3yhug7fcD+t8/KmA==}
@@ -1977,8 +1977,8 @@ packages:
     resolution: {integrity: sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg==}
     engines: {node: '>= 0.4'}
 
-  framer-motion@12.23.7:
-    resolution: {integrity: sha512-Qs+zNG9D/3c9C0riom1iXVVOOOaY3T32LIofgbQJz9APY/CUE5v6G41WkcZl2lVhaAgQDQcNq94f8qzLf3rTZA==}
+  framer-motion@12.23.9:
+    resolution: {integrity: sha512-TqEHXj8LWfQSKqfdr5Y4mYltYLw96deu6/K9kGDd+ysqRJPNwF9nb5mZcrLmybHbU7gcJ+HQar41U3UTGanbbQ==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0 || ^19.0.0
@@ -2394,8 +2394,8 @@ packages:
   modern-ahocorasick@1.1.0:
     resolution: {integrity: sha512-sEKPVl2rM+MNVkGQt3ChdmD8YsigmXdn5NifZn6jiwn9LRJpWm8F3guhaqrJT/JOat6pwpbXEk6kv+b9DMIjsQ==}
 
-  motion-dom@12.23.7:
-    resolution: {integrity: sha512-AyJR07/YxObtK3NyGLCfebUe0k9UZGhik+2eIPUoKz76cKRRSkMeifmIxfztIvOaKb/Smu9IfVHkmx+mV+iFmQ==}
+  motion-dom@12.23.9:
+    resolution: {integrity: sha512-6Sv++iWS8XMFCgU1qwKj9l4xuC47Hp4+2jvPfyTXkqDg2tTzSgX6nWKD4kNFXk0k7llO59LZTPuJigza4A2K1A==}
 
   motion-utils@12.23.6:
     resolution: {integrity: sha512-eAWoPgr4eFEOFfg2WjIsMoqJTW6Z8MTUCgn/GZ3VRpClWBdnbjryiA3ZSNLyxCTmCQx4RmYX6jX1iWHbenUPNQ==}
@@ -3022,7 +3022,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.12
       '@jridgewell/trace-mapping': 0.3.29
 
-  '@babel/runtime@7.27.6': {}
+  '@babel/runtime@7.28.2': {}
 
   '@emnapi/core@1.4.5':
     dependencies:
@@ -3242,12 +3242,12 @@ snapshots:
       '@mysten/utils': 0.1.1
       '@scure/base': 1.2.6
 
-  '@mysten/dapp-kit@0.16.16(@tanstack/react-query@5.83.0(react@19.1.0))(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)':
+  '@mysten/dapp-kit@0.17.0(@tanstack/react-query@5.83.0(react@19.1.0))(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)':
     dependencies:
-      '@mysten/slush-wallet': 0.1.16(typescript@5.8.3)
-      '@mysten/sui': 1.36.1(typescript@5.8.3)
+      '@mysten/slush-wallet': 0.1.17(typescript@5.8.3)
+      '@mysten/sui': 1.36.2(typescript@5.8.3)
       '@mysten/utils': 0.1.1
-      '@mysten/wallet-standard': 0.16.6(typescript@5.8.3)
+      '@mysten/wallet-standard': 0.16.7(typescript@5.8.3)
       '@radix-ui/react-dialog': 1.1.14(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@radix-ui/react-dropdown-menu': 2.1.15(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@radix-ui/react-slot': 1.2.3(@types/react@19.1.8)(react@19.1.0)
@@ -3268,11 +3268,11 @@ snapshots:
       - react-dom
       - typescript
 
-  '@mysten/slush-wallet@0.1.16(typescript@5.8.3)':
+  '@mysten/slush-wallet@0.1.17(typescript@5.8.3)':
     dependencies:
-      '@mysten/sui': 1.36.1(typescript@5.8.3)
+      '@mysten/sui': 1.36.2(typescript@5.8.3)
       '@mysten/utils': 0.1.1
-      '@mysten/wallet-standard': 0.16.6(typescript@5.8.3)
+      '@mysten/wallet-standard': 0.16.7(typescript@5.8.3)
       '@mysten/window-wallet-core': 0.0.6
       mitt: 3.0.1
       valibot: 0.36.0
@@ -3281,7 +3281,7 @@ snapshots:
       - '@gql.tada/vue-support'
       - typescript
 
-  '@mysten/sui@1.36.1(typescript@5.8.3)':
+  '@mysten/sui@1.36.2(typescript@5.8.3)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
       '@mysten/bcs': 1.6.4
@@ -3304,9 +3304,9 @@ snapshots:
     dependencies:
       '@scure/base': 1.2.6
 
-  '@mysten/wallet-standard@0.16.6(typescript@5.8.3)':
+  '@mysten/wallet-standard@0.16.7(typescript@5.8.3)':
     dependencies:
-      '@mysten/sui': 1.36.1(typescript@5.8.3)
+      '@mysten/sui': 1.36.2(typescript@5.8.3)
       '@wallet-standard/core': 1.1.1
     transitivePeerDependencies:
       - '@gql.tada/svelte-support'
@@ -3315,10 +3315,10 @@ snapshots:
 
   '@mysten/walrus-wasm@0.1.0': {}
 
-  '@mysten/walrus@0.3.1(typescript@5.8.3)':
+  '@mysten/walrus@0.4.0(typescript@5.8.3)':
     dependencies:
       '@mysten/bcs': 1.6.4
-      '@mysten/sui': 1.36.1(typescript@5.8.3)
+      '@mysten/sui': 1.36.2(typescript@5.8.3)
       '@mysten/utils': 0.1.1
       '@mysten/walrus-wasm': 0.1.0
       dataloader: 2.2.3
@@ -5090,9 +5090,9 @@ snapshots:
     dependencies:
       is-callable: 1.2.7
 
-  framer-motion@12.23.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  framer-motion@12.23.9(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
-      motion-dom: 12.23.7
+      motion-dom: 12.23.9
       motion-utils: 12.23.6
       tslib: 2.8.1
     optionalDependencies:
@@ -5454,7 +5454,7 @@ snapshots:
 
   media-query-parser@2.0.2:
     dependencies:
-      '@babel/runtime': 7.27.6
+      '@babel/runtime': 7.28.2
 
   merge2@1.4.1: {}
 
@@ -5485,7 +5485,7 @@ snapshots:
 
   modern-ahocorasick@1.1.0: {}
 
-  motion-dom@12.23.7:
+  motion-dom@12.23.9:
     dependencies:
       motion-utils: 12.23.6
 

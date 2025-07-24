@@ -36,15 +36,20 @@ const createClientsForNetwork = (network: NetworkType) => {
     const walrusClient = new WalrusClient({
         network: network === "mainnet" ? "mainnet" : "testnet",
         suiClient,
-        wasmUrl: 'https://unpkg.com/@mysten/walrus-wasm@latest/web/walrus_wasm_bg.wasm',
+        wasmUrl: process.env.NEXT_PUBLIC_WALRUS_WASM_URL!,
         ...(network === "testnet"
             ? {
                   packageConfig: {
-                      systemObjectId: '0x98ebc47370603fe81d9e15491b2f1443d619d1dab720d586e429ed233e1255c1',
-                      stakingPoolId: '0x20266a17b4f1a216727f3eef5772f8d486a9e3b5e319af80a5b75809c035561d',
+                      systemObjectId: process.env.NEXT_PUBLIC_TESTNET_SYSTEM_OBJECT_ID!,
+                      stakingPoolId: process.env.NEXT_PUBLIC_TESTNET_STAKING_POOL_ID!,
                   },
               }
-            : {}),
+            : {
+                  packageConfig: {
+                      systemObjectId: process.env.NEXT_PUBLIC_MAINNET_SYSTEM_OBJECT_ID!,
+                      stakingPoolId: process.env.NEXT_PUBLIC_MAINNET_STAKING_POOL_ID!,
+                  },
+              }),
     })
 
     return { suiClient, walrusClient }
@@ -53,7 +58,7 @@ const createClientsForNetwork = (network: NetworkType) => {
 export const useNetwork = create<NetworkState>()(
     persist(
         (set,) => {
-            const initialNetwork: NetworkType = "mainnet"
+            const initialNetwork: NetworkType = (process.env.NEXT_PUBLIC_DEFAULT_NETWORK as NetworkType) || "mainnet"
             const { suiClient, walrusClient } = createClientsForNetwork(initialNetwork)
 
             return {

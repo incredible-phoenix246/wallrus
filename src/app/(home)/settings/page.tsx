@@ -8,7 +8,7 @@ import { useWalletConnection } from '~/hooks/use-wallet-connection'
 import { Loader2 } from 'lucide-react'
 import { useNetwork } from '~/hooks/use-network'
 
-export function WalletSettings() {
+export default function WalletSettings() {
   const { autoConnectEnabled, setAutoConnectEnabled } = useNetwork()
   const { clearWallet, isClearingWallet, lastConnectedWallet } =
     useAutoConnect()

@@ -10,6 +10,8 @@ export interface BlobInfo {
     tipBalance: number
     costPerEpoch: number
     epochsLeft: number
+    currentEpoch?: number
+    storageEndEpoch?: number
 }
 
 interface TipDialogState {

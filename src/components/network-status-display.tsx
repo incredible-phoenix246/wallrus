@@ -7,8 +7,8 @@ import { Activity, Clock, Zap } from 'lucide-react'
 interface NetworkStatusDisplayProps {
   networkStatus: {
     currentEpoch: number
-    systemState: any
-    networkMetrics?: any
+    systemState: unknown
+    networkMetrics?: unknown
   } | null
   isLoading: boolean
 }

@@ -18,13 +18,14 @@ import { formatNumber } from '~/lib/utils'
 import { BlobInfoDisplay } from '~/components/blob-info-display'
 import { NetworkStatusDisplay } from '~/components/network-status-display'
 import { useTipDialogStore } from '~/hooks/tip-dialog-store'
-import { useWalrusBlobEnhanced } from '~/hooks/use-walrus-blob'
+import { useWalrusBlob } from '~/hooks/use-walrus-blob'
 
-const PRESET_TIPS = [50000, 100000, 500000]
+const PRESET_TIPS = [
+  Number(process.env.NEXT_PUBLIC_TIP_PRESET_1) || 50000,
+  Number(process.env.NEXT_PUBLIC_TIP_PRESET_2) || 100000,
+  Number(process.env.NEXT_PUBLIC_TIP_PRESET_3) || 500000,
+]
 
-interface TipDialogProps {
-  trigger: React.ReactNode
-}
 
 export function TipDialog() {
   const [blobIdInput, setBlobIdInput] = useState('')
@@ -55,8 +56,9 @@ export function TipDialog() {
     isLoadingNetworkStatus,
     searchError,
     tipError,
+    tipResult,
     networkError,
-  } = useWalrusBlobEnhanced()
+  } = useWalrusBlob()
 
   const handleOpen = () => {
     openDialog()
@@ -92,11 +94,7 @@ export function TipDialog() {
     if (!blobInfo) return
     const tipAmount = getTipAmount()
     if (tipAmount > 0) {
-      try {
-        await sendTip({ blobId: blobInfo.id, amount: tipAmount })
-      } catch (error) {
-        console.error('Failed to send tip:', error)
-      }
+      sendTip(tipAmount)
     }
   }
 
@@ -157,6 +155,16 @@ export function TipDialog() {
             </div>
           </div>
 
+          {/* Success Display */}
+          {tipResult?.success && (
+            <div className="flex w-full flex-wrap items-start gap-2 rounded-md bg-green-50 p-3 text-sm break-words whitespace-normal text-green-600">
+              <div className="h-4 w-4 shrink-0 rounded-full bg-green-500" />
+              <span className="flex-1 break-words">
+                Tip sent successfully! Transaction: {tipResult.txHash.slice(0, 8)}...
+              </span>
+            </div>
+          )}
+
           {/* Error Display */}
           {(error || searchError || tipError || networkError) && (
             <div className="flex w-full flex-wrap items-start gap-2 rounded-md bg-red-50 p-3 text-sm break-words whitespace-normal text-red-600">
@@ -173,11 +181,11 @@ export function TipDialog() {
           {/* Results Section */}
           {blobInfo && (
             <div className="space-y-4">
-              {/* Network Status */}
+              {/* Network Status
               <NetworkStatusDisplay
                 networkStatus={networkStatus || null}
                 isLoading={isLoadingNetworkStatus}
-              />
+              /> */}
 
               {/* Blob Information */}
               <BlobInfoDisplay

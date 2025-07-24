@@ -19,14 +19,14 @@ interface BlobNetworkInfo {
 // Network configurations for different networks
 const NETWORK_CONFIGS: Record<string, WalrusNetworkConfig> = {
     testnet: {
-        systemObjectId: "0x98ebc47370603fe81d9e15491b2f1443d619d1dab720d586e429ed233e1255c1",
-        stakingPoolId: "0x20266a17b4f1a216727f3eef5772f8d486a9e3b5e319af80a5b75809c035561d",
-        packageId: "0x98ebc47370603fe81d9e15491b2f1443d619d1dab720d586e429ed233e1255c1",
+        systemObjectId: process.env.NEXT_PUBLIC_TESTNET_SYSTEM_OBJECT_ID!,
+        stakingPoolId: process.env.NEXT_PUBLIC_TESTNET_STAKING_POOL_ID!,
+        packageId: process.env.NEXT_PUBLIC_TESTNET_PACKAGE_ID!,
     },
     mainnet: {
-        systemObjectId: "",
-        stakingPoolId: "",
-        packageId: "",
+        systemObjectId: process.env.NEXT_PUBLIC_MAINNET_SYSTEM_OBJECT_ID!,
+        stakingPoolId: process.env.NEXT_PUBLIC_MAINNET_STAKING_POOL_ID!,
+        packageId: process.env.NEXT_PUBLIC_MAINNET_PACKAGE_ID!,
     },
 }
 
@@ -41,7 +41,7 @@ export function useWalrusNetworkData() {
 
         try {
             const currentEpoch = await getCurrentEpoch(suiClient)
-            const blobStorageInfo = await getBlobStorageInfo(suiClient, blobId, config)
+            const blobStorageInfo = await getBlobStorageInfo(suiClient, blobId)
             const epochsLeft = Math.max(0, blobStorageInfo.storageEndEpoch - currentEpoch)
             const tipBalance = await getTipBalance(suiClient, blobId, config)
             const costPerEpoch = await calculateCostPerEpoch(suiClient, blobSize, config)
@@ -105,7 +105,6 @@ async function getCurrentEpoch(suiClient: SuiClient): Promise<number> {
 async function getBlobStorageInfo(
     suiClient: SuiClient,
     blobId: string,
-    config: WalrusNetworkConfig,
 ): Promise<{ storageEndEpoch: number }> {
     try {
         const objectsResponse = await suiClient.queryTransactionBlocks({
@@ -124,7 +123,7 @@ async function getBlobStorageInfo(
             if (tx.events) {
                 for (const event of tx.events) {
                     if (event.type.includes("walrus") && event.type.includes("storage")) {
-                        const parsedJson = event.parsedJson as any
+                        const parsedJson = event.parsedJson as { blob_id?: string; storage_end_epoch?: string }
                         if (parsedJson && parsedJson.blob_id === blobId) {
                             return {
                                 storageEndEpoch: Number.parseInt(parsedJson.storage_end_epoch || "0"),
@@ -157,7 +156,7 @@ async function getTipBalance(suiClient: SuiClient, blobId: string, config: Walru
 
         let totalTips = 0
         for (const event of tipEvents.data) {
-            const parsedJson = event.parsedJson as any
+            const parsedJson = event.parsedJson as { blob_id?: string; amount?: string }
             if (parsedJson && parsedJson.blob_id === blobId) {
                 totalTips += Number.parseInt(parsedJson.amount || "0")
             }
@@ -187,7 +186,7 @@ async function calculateCostPerEpoch(
         })
 
         if (systemObject.data?.content && "fields" in systemObject.data.content) {
-            const fields = systemObject.data.content.fields as any
+            const fields = systemObject.data.content.fields as { price_per_byte_per_epoch?: string }
 
             // Look for pricing fields (these field names are hypothetical and would need to be adjusted)
             const pricePerBytePerEpoch = Number.parseInt(fields.price_per_byte_per_epoch || "100")

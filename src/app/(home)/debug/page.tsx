@@ -5,7 +5,7 @@ import { useWalletConnection } from '~/hooks/use-wallet-connection'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { Badge } from '~/components/ui/badge'
 
-export function WalletDebug() {
+export default function WalletDebug() {
   const { queries, isAutoConnecting, autoConnectError, lastConnectedWallet } =
     useAutoConnect()
   const { connectionStatus, currentWallet, wallets } = useWalletConnection()

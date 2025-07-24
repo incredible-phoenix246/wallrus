@@ -2,7 +2,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Button } from './ui/button'
-import { MessageCircle } from 'lucide-react'
 import BlurImage from './miscellaneous/blur-image'
 
 const CtaSection = () => {
