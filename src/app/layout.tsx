@@ -1,10 +1,9 @@
 import './globals.css'
-import { cn, inDevelopment } from '~/lib/utils'
+import { cn } from '~/lib/utils'
 import type { Metadata } from 'next'
 import { McLaren } from 'next/font/google'
 import { Header } from '~/components/header'
 import { Footer } from '~/components/footer'
-import { TipDialogs } from '~/components/tip-dialogs'
 import { Providers } from './provider'
 import { NetworkSwitcher } from '~/components/network-switcher'
 import { FloatingNetworkIndicator } from '~/components/floating-network-indicator'
@@ -65,7 +64,6 @@ export default function RootLayout({
             {children}
             <FloatingNetworkIndicator />
             <TipDialog />
-            <TipDialogs />
             <Footer />
           </main>
         </Providers>

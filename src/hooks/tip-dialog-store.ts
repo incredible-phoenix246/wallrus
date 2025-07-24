@@ -3,6 +3,10 @@ import { create } from "zustand"
 export interface BlobInfo {
     id: string
     status: "active" | "not_active" | "loading"
+    size: number
+    contentType: string
+    contentPreview: string | null
+    isTextContent: boolean
     tipBalance: number
     costPerEpoch: number
     epochsLeft: number
@@ -43,7 +47,6 @@ export const useTipDialogStore = create<TipDialogState>((set) => ({
 
     openDialog: () => set({ isOpen: true }),
     closeDialog: () => set({ isOpen: false }),
-
     setSearchQuery: (query: string) => set({ searchQuery: query }),
     setBlobInfo: (info: BlobInfo | null) => set({ blobInfo: info }),
     setCustomTipAmount: (amount: string) =>
@@ -59,7 +62,6 @@ export const useTipDialogStore = create<TipDialogState>((set) => ({
     setIsSearching: (loading: boolean) => set({ isSearching: loading }),
     setIsSubmitting: (submitting: boolean) => set({ isSubmitting: submitting }),
     setError: (error: string | null) => set({ error }),
-
     resetForm: () =>
         set({
             searchQuery: "",

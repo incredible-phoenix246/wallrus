@@ -28,7 +28,7 @@ export function Providers({
             <ReactQueryDevtools
               initialIsOpen={false}
               position="left"
-              buttonPosition="bottom-left"
+              buttonPosition="top-left"
             />
           </NextThemesProvider>
         </WalletProvider>

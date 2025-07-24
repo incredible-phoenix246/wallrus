@@ -1,24 +1,38 @@
 'use client'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '~/components/ui/dialog'
+import type React from 'react'
+
+import { AlertCircle, Loader2, Search } from 'lucide-react'
+import { useState, useCallback, useEffect } from 'react'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '~/components/ui/dialog'
+import { formatNumber } from '~/lib/utils'
+import { BlobInfoDisplay } from '~/components/blob-info-display'
+import { NetworkStatusDisplay } from '~/components/network-status-display'
 import { useTipDialogStore } from '~/hooks/tip-dialog-store'
-import { Search, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
-import { useWalrusBlob } from '~/hooks/use-walrus-blob'
+import { useWalrusBlobEnhanced } from '~/hooks/use-walrus-blob'
 
-const PRESET_TIPS = [100000, 200000, 500000]
+const PRESET_TIPS = [50000, 100000, 500000]
+
+interface TipDialogProps {
+  trigger: React.ReactNode
+}
 
 export function TipDialog() {
+  const [blobIdInput, setBlobIdInput] = useState('')
+
   const {
     isOpen,
     closeDialog,
+    openDialog,
     searchQuery,
     setSearchQuery,
     blobInfo,
@@ -33,123 +47,154 @@ export function TipDialog() {
   const {
     searchBlob,
     sendTip,
+    downloadBlob,
+    blobData,
+    networkStatus,
     isSearching,
     isSendingTip,
+    isLoadingNetworkStatus,
     searchError,
     tipError,
-  } = useWalrusBlob()
+    networkError,
+  } = useWalrusBlobEnhanced()
+
+  const handleOpen = () => {
+    openDialog()
+    resetForm()
+  }
 
   const handleClose = () => {
     closeDialog()
     resetForm()
+    setBlobIdInput('')
   }
 
-  const handleSearch = () => {
-    if (searchQuery.trim()) {
+  const handleSearch = useCallback(() => {
+    if (blobIdInput.trim()) {
+      setSearchQuery(blobIdInput.trim())
       searchBlob()
     }
-  }
+  }, [blobIdInput, setSearchQuery, searchBlob])
 
-  const handlePresetTip = (amount: number) => {
-    setSelectedPresetTip(selectedPresetTip === amount ? null : amount)
-  }
-
-  const handleSendTip = () => {
-    if (!blobInfo) return
-
-    const tipAmount = selectedPresetTip || Number.parseInt(customTipAmount) || 0
-    if (tipAmount > 0) {
-      sendTip({ blobId: blobInfo.id, amount: tipAmount })
-    }
-  }
-
-  const formatNumber = (num: number) => {
-    return new Intl.NumberFormat().format(num)
-  }
+  const handlePresetTip = useCallback(
+    (amount: number) => {
+      setSelectedPresetTip(selectedPresetTip === amount ? null : amount)
+      setCustomTipAmount('')
+    },
+    [selectedPresetTip, setSelectedPresetTip, setCustomTipAmount]
+  )
 
   const getTipAmount = () => {
     return selectedPresetTip || Number.parseInt(customTipAmount) || 0
   }
 
+  const handleSendTip = async () => {
+    if (!blobInfo) return
+    const tipAmount = getTipAmount()
+    if (tipAmount > 0) {
+      try {
+        await sendTip({ blobId: blobInfo.id, amount: tipAmount })
+      } catch (error) {
+        console.error('Failed to send tip:', error)
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (blobIdInput.length > 10 && blobIdInput !== searchQuery) {
+      const timeoutId = setTimeout(() => {
+        handleSearch()
+      }, 500)
+      return () => clearTimeout(timeoutId)
+    }
+  }, [blobIdInput, searchQuery, handleSearch])
+
   return (
-    <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="font-sans sm:min-w-2xl">
+    <Dialog open={isOpen} onOpenChange={isOpen ? handleClose : handleOpen}>
+      <DialogContent className="hide-scrollbar max-h-[90vh] overflow-y-auto rounded-2xl font-sans sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">
-            TIP A BLOB
-          </DialogTitle>
-          <p className="text-muted-foreground text-sm">
+          <DialogTitle>Tip a Blob</DialogTitle>
+          <DialogDescription>
             Add funds to a shared blob to help keep it online longer
-          </p>
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
-          {/* Search Section */}
-          <div className="flex flex-col gap-4">
-            <div className="flex min-w-0 gap-2">
-              <div className="relative min-w-0 flex-1">
-                <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
-                <Input
-                  id="blob-search"
-                  placeholder="Search for Shared Blob"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="min-w-0 pl-10"
-                />
+          <div className="flex w-full flex-col gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="blob-id">Blob ID</Label>
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                  <Input
+                    id="blob-id"
+                    placeholder="Enter blob ID to search..."
+                    value={blobIdInput}
+                    onChange={(e) => setBlobIdInput(e.target.value)}
+                    className="pl-10"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleSearch()
+                      }
+                    }}
+                  />
+                </div>
               </div>
+              <Button
+                onClick={handleSearch}
+                disabled={!blobIdInput.trim() || isSearching}
+                className="w-full bg-[#213b46] hover:bg-[#213b46]/90"
+              >
+                {isSearching ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Searching...
+                  </>
+                ) : (
+                  'Search'
+                )}
+              </Button>
             </div>
-
-            <Button
-              onClick={handleSearch}
-              disabled={!searchQuery.trim() || isSearching}
-              className="bg-[#213b46] hover:bg-[#213b46]/90"
-            >
-              {isSearching ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                'Search for Blob'
-              )}
-            </Button>
           </div>
 
           {/* Error Display */}
-          {(error || searchError || tipError) && (
+          {(error || searchError || tipError || networkError) && (
             <div className="flex w-full flex-wrap items-start gap-2 rounded-md bg-red-50 p-3 text-sm break-words whitespace-normal text-red-600">
               <AlertCircle className="h-4 w-4 shrink-0" />
               <span className="flex-1 break-words">
-                {error || searchError?.message || tipError?.message}
+                {error ||
+                  searchError?.message ||
+                  tipError?.message ||
+                  networkError?.message}
               </span>
             </div>
           )}
 
+          {/* Results Section */}
           {blobInfo && (
             <div className="space-y-4">
-              {/* Status */}
-              <div className="flex items-center gap-2 rounded-lg bg-gray-50 p-3">
-                <CheckCircle className="h-5 w-5 text-green-500" />
-                <div>
-                  <div className="font-medium">Blob Status</div>
-                  <div className="text-muted-foreground text-sm">
-                    {blobInfo.status === 'active' ? 'Active' : 'Not Active'}
-                  </div>
-                </div>
-                {blobInfo.status === 'not_active' && (
-                  <div className="ml-auto">
-                    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-yellow-100">
-                      <span className="text-xs">⚠</span>
-                    </div>
-                  </div>
-                )}
-              </div>
+              {/* Network Status */}
+              <NetworkStatusDisplay
+                networkStatus={networkStatus || null}
+                isLoading={isLoadingNetworkStatus}
+              />
 
-              {/* Stats */}
+              {/* Blob Information */}
+              <BlobInfoDisplay
+                blobInfo={blobInfo}
+                onDownload={
+                  blobData ? () => downloadBlob(blobInfo, blobData) : undefined
+                }
+              />
+
+              {/* Storage Stats */}
               <div className="grid grid-cols-3 gap-4 rounded-lg bg-gray-50 p-4">
                 <div className="text-center">
                   <div className="text-muted-foreground text-sm">
                     Tip Balance
                   </div>
                   <div className="text-lg font-semibold">
-                    {formatNumber(blobInfo.tipBalance)}
+                    {formatNumber(blobInfo.tipBalance)} MIST
                   </div>
                 </div>
                 <div className="text-center">
@@ -157,15 +202,41 @@ export function TipDialog() {
                     Cost/Epoch
                   </div>
                   <div className="text-lg font-semibold">
-                    {formatNumber(blobInfo.costPerEpoch)}
+                    {formatNumber(blobInfo.costPerEpoch)} MIST
                   </div>
                 </div>
                 <div className="text-center">
                   <div className="text-muted-foreground text-sm">
                     Epochs Left
                   </div>
-                  <div className="text-lg font-semibold">
+                  <div
+                    className={`text-lg font-semibold ${blobInfo.epochsLeft <= 2 ? 'text-red-600' : 'text-green-600'}`}
+                  >
                     {blobInfo.epochsLeft}
+                  </div>
+                  {blobInfo.storageEndEpoch && (
+                    <div className="text-muted-foreground text-xs">
+                      Until epoch {blobInfo.storageEndEpoch}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Additional Blob Details */}
+              <div className="rounded-lg bg-blue-50 p-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm font-medium">Blob Size</div>
+                    <div className="text-muted-foreground text-xs">
+                      {(blobInfo.size / 1024).toFixed(2)} KB (
+                      {blobInfo.size.toLocaleString()} bytes)
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium">Content Type</div>
+                    <div className="text-muted-foreground text-xs">
+                      {blobInfo.contentType}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -175,7 +246,8 @@ export function TipDialog() {
                 <div>
                   <div className="font-medium">Send a Tip</div>
                   <div className="text-muted-foreground text-sm">
-                    Choose your preferred tip or enter custom amount
+                    Choose your preferred tip amount or enter a custom amount to
+                    extend storage
                   </div>
                 </div>
 
@@ -191,22 +263,54 @@ export function TipDialog() {
                       onClick={() => handlePresetTip(amount)}
                       className="flex-1"
                     >
-                      Tip {amount / 1000}k
+                      {amount >= 1000000
+                        ? `${amount / 1000000}M`
+                        : `${amount / 1000}K`}{' '}
+                      MIST
                     </Button>
                   ))}
                 </div>
 
                 {/* Custom Amount */}
                 <div className="space-y-2">
-                  <Label htmlFor="custom-amount">Enter a custom amount</Label>
+                  <Label htmlFor="custom-amount">Custom amount (MIST)</Label>
                   <Input
                     id="custom-amount"
                     type="number"
-                    placeholder="90"
+                    placeholder="Enter amount in MIST"
                     value={customTipAmount}
                     onChange={(e) => setCustomTipAmount(e.target.value)}
                   />
+                  {customTipAmount && Number.parseInt(customTipAmount) > 0 && (
+                    <div className="text-muted-foreground text-xs">
+                      ≈{' '}
+                      {(Number.parseInt(customTipAmount) / 1000000000).toFixed(
+                        6
+                      )}{' '}
+                      SUI
+                    </div>
+                  )}
                 </div>
+
+                {/* Tip Calculation */}
+                {getTipAmount() > 0 && blobInfo.costPerEpoch > 0 && (
+                  <div className="rounded-lg bg-green-50 p-3">
+                    <div className="text-sm font-medium text-green-800">
+                      This tip will extend storage by approximately{' '}
+                      <span className="font-bold">
+                        {Math.floor(getTipAmount() / blobInfo.costPerEpoch)}{' '}
+                        epochs
+                      </span>
+                    </div>
+                    {blobInfo.storageEndEpoch && (
+                      <div className="mt-1 text-xs text-green-600">
+                        Storage will be extended until epoch{' '}
+                        {blobInfo.storageEndEpoch +
+                          Math.floor(getTipAmount() / blobInfo.costPerEpoch)}
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Send Button */}
                 <Button
@@ -221,10 +325,18 @@ export function TipDialog() {
                       Sending Tip...
                     </>
                   ) : (
-                    `Renew (${formatNumber(getTipAmount())} MIST)`
+                    `Send Tip (${formatNumber(getTipAmount())} MIST)`
                   )}
                 </Button>
               </div>
+            </div>
+          )}
+
+          {/* Empty State */}
+          {!blobInfo && !isSearching && blobIdInput.length > 0 && (
+            <div className="text-muted-foreground py-8 text-center">
+              <Search className="mx-auto mb-4 h-12 w-12 opacity-50" />
+              <p>Enter a valid blob ID to view storage information</p>
             </div>
           )}
         </div>

@@ -37,6 +37,14 @@ const createClientsForNetwork = (network: NetworkType) => {
         network: network === "mainnet" ? "mainnet" : "testnet",
         suiClient,
         wasmUrl: 'https://unpkg.com/@mysten/walrus-wasm@latest/web/walrus_wasm_bg.wasm',
+        ...(network === "testnet"
+            ? {
+                  packageConfig: {
+                      systemObjectId: '0x98ebc47370603fe81d9e15491b2f1443d619d1dab720d586e429ed233e1255c1',
+                      stakingPoolId: '0x20266a17b4f1a216727f3eef5772f8d486a9e3b5e319af80a5b75809c035561d',
+                  },
+              }
+            : {}),
     })
 
     return { suiClient, walrusClient }

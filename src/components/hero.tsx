@@ -6,9 +6,11 @@ import { useWalletConnection } from '~/hooks/use-wallet-connection'
 import { SLUSH_WALLET_NAME } from '@mysten/slush-wallet'
 import { useTipDialogStore } from '~/hooks/tip-dialog-store'
 import { useRouter } from 'next/navigation'
+import { useWalletDialog } from './use-wallet-dialog'
 
 export const HeroSection = () => {
   const { isAutoConnecting } = useAutoConnect()
+  const { openConnectDialog } = useWalletDialog()
   const { wallets, connectionStatus, connect, isConnectingToWallet } =
     useWalletConnection()
   const { openDialog } = useTipDialogStore()
@@ -71,7 +73,7 @@ export const HeroSection = () => {
               if (connectionStatus === 'connected') {
                 openDialog()
               } else if (allowedWallet) {
-                connect(allowedWallet)
+                openConnectDialog()
               } else {
                 router.push(
                   'https://chromewebstore.google.com/detail/slush-%E2%80%94-a-sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil'
