@@ -194,7 +194,7 @@ async function calculateCostPerEpoch(
         }
 
         // Fallback calculation if we can't get exact pricing
-        // Estimate based on blob size (rough estimate: 0.1 MIST per byte per epoch)
+        // Estimate based on blob size (rough estimate: 0.1 FROST per byte per epoch)
         return Math.max(1000, Math.floor(blobSize * 0.1))
     } catch (error) {
         console.error("Error calculating cost per epoch:", error)

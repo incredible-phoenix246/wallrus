@@ -16,7 +16,6 @@ import {
 } from '~/components/ui/dialog'
 import { formatNumber } from '~/lib/utils'
 import { BlobInfoDisplay } from '~/components/blob-info-display'
-import { NetworkStatusDisplay } from '~/components/network-status-display'
 import { useTipDialogStore } from '~/hooks/tip-dialog-store'
 import { useWalrusBlob } from '~/hooks/use-walrus-blob'
 
@@ -50,10 +49,8 @@ export function TipDialog() {
     sendTip,
     downloadBlob,
     blobData,
-    networkStatus,
     isSearching,
     isSendingTip,
-    isLoadingNetworkStatus,
     searchError,
     tipError,
     tipResult,
@@ -202,7 +199,7 @@ export function TipDialog() {
                     Tip Balance
                   </div>
                   <div className="text-lg font-semibold">
-                    {formatNumber(blobInfo.tipBalance)} MIST
+                    {formatNumber(blobInfo.tipBalance)} FROST
                   </div>
                 </div>
                 <div className="text-center">
@@ -210,7 +207,7 @@ export function TipDialog() {
                     Cost/Epoch
                   </div>
                   <div className="text-lg font-semibold">
-                    {formatNumber(blobInfo.costPerEpoch)} MIST
+                    {formatNumber(blobInfo.costPerEpoch)} FROST
                   </div>
                 </div>
                 <div className="text-center">
@@ -274,18 +271,18 @@ export function TipDialog() {
                       {amount >= 1000000
                         ? `${amount / 1000000}M`
                         : `${amount / 1000}K`}{' '}
-                      MIST
+                      FROST
                     </Button>
                   ))}
                 </div>
 
                 {/* Custom Amount */}
                 <div className="space-y-2">
-                  <Label htmlFor="custom-amount">Custom amount (MIST)</Label>
+                  <Label htmlFor="custom-amount">Custom amount (FROST)</Label>
                   <Input
                     id="custom-amount"
                     type="number"
-                    placeholder="Enter amount in MIST"
+                    placeholder="Enter amount in FROST"
                     value={customTipAmount}
                     onChange={(e) => setCustomTipAmount(e.target.value)}
                   />
@@ -333,7 +330,7 @@ export function TipDialog() {
                       Sending Tip...
                     </>
                   ) : (
-                    `Send Tip (${formatNumber(getTipAmount())} MIST)`
+                    `Send Tip (${formatNumber(getTipAmount())} FROST)`
                   )}
                 </Button>
               </div>

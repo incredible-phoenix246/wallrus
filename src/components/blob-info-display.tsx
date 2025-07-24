@@ -107,13 +107,13 @@ export function BlobInfoDisplay({
             <label className="text-muted-foreground text-sm font-medium">
               Tip Balance
             </label>
-            <p className="text-sm">{blobInfo.tipBalance} MIST</p>
+            <p className="text-sm">{blobInfo.tipBalance} FROST</p>
           </div>
           <div>
             <label className="text-muted-foreground text-sm font-medium">
               Cost/Epoch
             </label>
-            <p className="text-sm">{blobInfo.costPerEpoch} MIST</p>
+            <p className="text-sm">{blobInfo.costPerEpoch} FROST</p>
           </div>
           <div>
             <label className="text-muted-foreground text-sm font-medium">

@@ -56,7 +56,7 @@ export function NetworkStatusDisplay({
 
   const formatGasPrice = (price: string | bigint) => {
     const priceNum = typeof price === 'bigint' ? Number(price) : Number(price)
-    return `${priceNum.toLocaleString()} MIST`
+    return `${priceNum.toLocaleString()} FROST`
   }
 
   return (
